@@ -1,70 +1,221 @@
-# Getting Started with Create React App
+# Freelancer Marketplace Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive React.js frontend for the Freelancer Marketplace platform built according to the Software Requirements Specification (SRS).
 
-## Available Scripts
+## Features Implemented
 
-In the project directory, you can run:
+### ✅ Authentication & User Management
+- User registration with role selection (Freelancer/Client)
+- Secure login with JWT token management
+- Protected routes based on authentication status
+- Automatic token refresh and user session management
 
-### `npm start`
+### ✅ Profile Management
+- Freelancer profile creation and editing
+- Client profile management
+- Skills and portfolio management
+- Profile photo upload capability
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### ✅ Project Management
+- Project creation for clients
+- Project listing and filtering
+- Project detail view with full information
+- Project status tracking (Open → Assigned → In Progress → Completed/Canceled)
+- Project applications and assignment system
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### ✅ Search & Discovery
+- Freelancer search with filters (skills, hourly rate, location)
+- Project search for freelancers
+- Paginated results
+- Real-time filtering capabilities
 
-### `npm test`
+### ✅ Communication System
+- In-app messaging between clients and freelancers
+- Conversation-based messaging interface
+- Real-time message updates
+- Project-specific chat rooms
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### ✅ Admin Dashboard
+- User management (view, deactivate users)
+- Project management (view, archive projects)
+- System statistics and analytics
+- Audit logging capabilities
 
-### `npm run build`
+### ✅ Responsive Design
+- Mobile-first responsive design
+- Tailwind CSS for consistent styling
+- Cross-browser compatibility
+- WCAG 2.1 AA accessibility compliance
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technology Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **React.js 18+** - Frontend framework
+- **React Router v6** - Client-side routing
+- **Axios** - HTTP client for API calls
+- **Tailwind CSS** - Utility-first CSS framework
+- **Context API** - State management
+- **JWT** - Token-based authentication
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Structure
 
-### `npm run eject`
+```
+frontend/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── auth/
+│   │   │   └── ProtectedRoute.js
+│   │   └── layout/
+│   │       └── Navbar.js
+│   ├── context/
+│   │   └── AuthContext.js
+│   ├── pages/
+│   │   ├── admin/
+│   │   │   └── AdminDashboard.js
+│   │   ├── auth/
+│   │   │   ├── Login.js
+│   │   │   └── Register.js
+│   │   ├── freelancers/
+│   │   │   └── Freelancers.js
+│   │   ├── profiles/
+│   │   │   ├── ClientProfile.js
+│   │   │   └── FreelancerProfile.js
+│   │   ├── projects/
+│   │   │   ├── CreateProject.js
+│   │   │   ├── ProjectDetail.js
+│   │   │   └── Projects.js
+│   │   ├── Dashboard.js
+│   │   ├── Home.js
+│   │   └── Messages.js
+│   ├── App.js
+│   ├── index.css
+│   └── index.js
+├── package.json
+└── tailwind.config.js
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Getting Started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Prerequisites
+- Node.js 16+ and npm
+- Backend API running on http://localhost:8080
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Installation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
 
-## Learn More
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Start the development server:
+   ```bash
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The application will open at [http://localhost:3000](http://localhost:3000).
 
-### Code Splitting
+## API Integration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The frontend integrates with the Spring Boot backend through RESTful APIs:
 
-### Analyzing the Bundle Size
+- **Authentication**: `/api/auth/**`
+- **Users**: `/api/users/**`
+- **Projects**: `/api/projects/**`
+- **Applications**: `/api/applications/**`
+- **Messages**: `/api/messages/**`
+- **Profiles**: `/api/profiles/**`
+- **Admin**: `/api/admin/**`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Environment Configuration
 
-### Making a Progressive Web App
+The frontend is configured to work with the backend running on `http://localhost:8080`. Update the base URL in the AuthContext and individual components if needed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Features Breakdown
 
-### Advanced Configuration
+### 1. Home Page (`/`)
+- Landing page with feature highlights
+- Call-to-action buttons for registration/login
+- Responsive hero section
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 2. Authentication
+- **Login** (`/login`): Secure login form with validation
+- **Register** (`/register`): Role-based registration (Freelancer/Client)
 
-### Deployment
+### 3. Dashboard (`/dashboard`)
+- Personalized dashboard based on user role
+- Quick access to relevant features
+- Recent activity overview
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 4. Projects
+- **Browse Projects** (`/projects`): List all available projects
+- **Project Details** (`/projects/:id`): Detailed project view with application/assignment features
+- **Create Project** (`/projects/create`): Multi-step project creation form for clients
 
-### `npm run build` fails to minify
+### 5. Freelancers
+- **Browse Freelancers** (`/freelancers`): Search and filter freelancers
+- **Freelancer Profile** (`/freelancers/:id`): Detailed freelancer profile view
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 6. Messaging (`/messages`)
+- Real-time messaging interface
+- Conversation-based layout
+- Project-specific chat rooms
+
+### 7. Admin Dashboard (`/admin`)
+- User management interface
+- Project oversight capabilities
+- System analytics and reporting
+
+## Security Features
+
+- JWT token-based authentication
+- Protected routes for authenticated users
+- Role-based access control
+- Secure API communication
+- Input validation and sanitization
+
+## Responsive Design
+
+- Mobile-first approach
+- Responsive navigation
+- Touch-friendly interfaces
+- Optimized for all screen sizes
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## Development Commands
+
+```bash
+# Start development server
+npm start
+
+# Build for production
+npm run build
+
+# Run tests
+npm test
+
+# Lint code
+npm run lint
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is part of the Freelancer Marketplace system and follows the specifications outlined in the SRS document.
