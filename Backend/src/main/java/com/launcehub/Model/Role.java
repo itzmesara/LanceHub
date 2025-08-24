@@ -1,5 +1,7 @@
 package com.launcehub.Model;
 
 public enum Role {
-    CLIENT,FREELANCER,ADMIN
+    CLIENT,
+    FREELANCER,
+    ADMIN
 }

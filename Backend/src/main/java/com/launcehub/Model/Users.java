@@ -9,8 +9,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +31,9 @@ public class Users {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     Role role;
+
+    @Column(nullable = false)
+    String name;
     
     boolean isActive=true;
 

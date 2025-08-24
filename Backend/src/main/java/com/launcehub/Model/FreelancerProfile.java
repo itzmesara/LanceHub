@@ -1,9 +1,6 @@
 package com.launcehub.Model;
 
 import java.math.BigDecimal;
-import java.sql.Types;
-
-import org.hibernate.annotations.Type;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class FreelancerProfile {
@@ -23,19 +22,26 @@ public class FreelancerProfile {
     @JoinColumn(name = "user_id", nullable = false,unique = true)
     Users user;
 
+    @NotBlank(message = "First name is required")
     String firstName;
+
+    @NotBlank(message = "Last name is required")
     String lastName;
+    
     String bio;
 
+    @Positive(message = "Hourly rate must be a positive number")
     BigDecimal hourlyRate;
 
     String location;
 
     String[] skills;
     
-    @Type(type = "org.hibernate.type.TextType")
-    @Column(columnDefinition = "text")
-    Object portfolio;
+    @jakarta.persistence.Column(name = "portfolio", columnDefinition = "TEXT")
+    private String portfolio;
+
+    String profilePictureUri;
+
 
 
 }

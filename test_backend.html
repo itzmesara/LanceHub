@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backend API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background-color: #d4edda; }
+        .error { background-color: #f8d7da; }
+        button { margin: 5px; padding: 8px 16px; }
+    </style>
+</head>
+<body>
+    <h1>Backend API Test</h1>
+    
+    <div class="test">
+        <h3>1. Test Public Endpoint (GET /api/projects)</h3>
+        <button onclick="testPublicProjects()">Test Public Projects</button>
+        <div id="publicResult"></div>
+    </div>
+
+    <div class="test">
+        <h3>2. Test Authentication (POST /api/auth/login)</h3>
+        <input type="text" id="email" placeholder="Email" value="727723eucs208@skcet.ac.in">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="testLogin()">Test Login</button>
+        <div id="loginResult"></div>
+    </div>
+
+    <div class="test">
+        <h3>3. Test Authenticated Endpoint (GET /api/client-profiles/my-profile)</h3>
+        <button onclick="testAuthenticated()" disabled id="authBtn">Test Authenticated</button>
+        <div id="authResult"></div>
+    </div>
+
+    <div class="test">
+        <h3>4. Test Project Creation (POST /api/projects)</h3>
+        <button onclick="testCreateProject()" disabled id="createBtn">Test Create Project</button>
+        <div id="createResult"></div>
+    </div>
+
+    <script>
+        let token = null;
+
+        async function testPublicProjects() {
+            try {
+                const response = await fetch('http://localhost:8080/api/projects');
+                const result = document.getElementById('publicResult');
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `<div class="success">SUCCESS: ${data.length} projects found</div>`;
+                } else {
+                    result.innerHTML = `<div class="error">ERROR: ${response.status} ${response.statusText}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('publicResult').innerHTML = `<div class="error">ERROR: ${error.message}</div>`;
+            }
+        }
+
+        async function testLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('http://localhost:8080/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const result = document.getElementById('loginResult');
+                if (response.ok) {
+                    const data = await response.json();
+                    token = data.token;
+                    result.innerHTML = `<div class="success">SUCCESS: Logged in as ${data.email}, token received</div>`;
+                    document.getElementById('authBtn').disabled = false;
+                    document.getElementById('createBtn').disabled = false;
+                } else {
+                    result.innerHTML = `<div class="error">ERROR: ${response.status} ${response.statusText}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = `<div class="error">ERROR: ${error.message}</div>`;
+            }
+        }
+
+        async function testAuthenticated() {
+            try {
+                const response = await fetch('http://localhost:8080/api/client-profiles/my-profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const result = document.getElementById('authResult');
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `<div class="success">SUCCESS: Profile data received</div>`;
+                } else if (response.status === 404) {
+                    result.innerHTML = `<div class="success">SUCCESS: 404 - Profile not found (expected for new users)</div>`;
+                } else {
+                    result.innerHTML = `<div class="error">ERROR: ${response.status} ${response.statusText}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('authResult').innerHTML = `<div class="error">ERROR: ${error.message}</div>`;
+            }
+        }
+
+        async function testCreateProject() {
+            try {
+                const response = await fetch('http://localhost:8080/api/projects', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        title: 'Test Project',
+                        description: 'This is a test project',
+                        budget: 1000,
+                        requiredSkills: ['Java', 'Spring Boot']
+                    })
+                });
+                
+                const result = document.getElementById('createResult');
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `<div class="success">SUCCESS: Project created with ID ${data.id}</div>`;
+                } else {
+                    result.innerHTML = `<div class="error">ERROR: ${response.status} ${response.statusText}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('createResult').innerHTML = `<div class="error">ERROR: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
