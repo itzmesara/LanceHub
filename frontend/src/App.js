@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
@@ -21,8 +21,9 @@ import './index.css';
 
 function App() {
   return (
+    <BrowserRouter>
     <AuthProvider>
-      <Router>
+      {/* <Router> */}
         <div className="min-h-screen bg-gray-50">
           <Navbar />
           <Routes>
@@ -42,8 +43,9 @@ function App() {
             <Route path="/client/applications" element={<ProtectedRoute><ClientApplications /></ProtectedRoute>} />
           </Routes>
         </div>
-      </Router>
+      {/* </Router> */}
     </AuthProvider>
+    </BrowserRouter>
   );
 }
 
